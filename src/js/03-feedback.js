@@ -1,7 +1,7 @@
 import throttle from 'lodash.throttle';
 
 const FeedBackForm = document.querySelector('.feedback-form');
-const inputTextObj = parceObj(localStorage.getItem('feedback-form-state'));
+let inputTextObj = parceObj(localStorage.getItem('feedback-form-state'));
 
 window.addEventListener('load', checkStorage(inputTextObj));
 
@@ -28,10 +28,18 @@ function writeData(e) {
 
 function submitForm(e) {
   e.preventDefault();
+  const parceObjData = parceObj(localStorage.getItem('feedback-form-state'));
 
-  console.log(parceObj(localStorage.getItem('feedback-form-state')));
-  localStorage.clear();
-  e.target.reset();
+  if (Object.keys(parceObjData).length === 2) {
+    console.log(parceObjData);
+    inputTextObj = {};
+    localStorage.clear();
+    e.target.reset();
+
+    return '';
+  }
+
+  alert('Fill all fields');
 }
 
 function parceObj(obj) {
